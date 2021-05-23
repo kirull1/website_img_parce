@@ -1,0 +1,12 @@
+{
+    "name": "kivahnin/website_img_parce",
+    "description" : "website for collecting pictures.",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "setting\\" : "settings"
+        }
+    }
+}

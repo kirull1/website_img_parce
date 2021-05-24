@@ -20,6 +20,8 @@
 			$this->limit_time = $default['limit_time'];
 
 			parent::__construct($settings_pdo);
+
+			setting\api::$config['ip_check'] === false ?: $this->ip_сheck();
 		}
 
 		// Получение значений

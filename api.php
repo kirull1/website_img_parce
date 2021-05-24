@@ -55,8 +55,8 @@
 
 						case 'ADD':
 							if (is_numeric($_GET['id'])) {
-								$db = $Api->get_build('SELECT * from `image` WHERE `id` between ? and ?'); // Получения ограниченного промежудка записей
-								$Message = $Api->build_request($db, $_GET['id'] - $default['add'], $_GET['id'] - 1);
+								$db = $Api->get_build('SELECT * from `image` ORDER BY `id` DESC LIMIT ?,?'); // Получения ограниченного промежудка записей
+								$Message = $Api->build_request($db, [$_GET['id'] + $default['start'], PDO::PARAM_INT], [$default['add'], PDO::PARAM_INT]);
 							} else throw new ApiException('Параметр id указан неверно!', 400);
 							break;
 
@@ -81,7 +81,7 @@
 							throw new ApiException('Некоторые параметры указаны неверно!', 400);
 					}
 				} elseif ($_GET['type'] == 'stats') {
-					$db = $Api->get_build('SELECT count(*) AS `count` from `image`'); // Получения статистики
+					$db = $Api->get_build('SELECT count(*) AS `count` from `image`'); // Получен\ статистики
 					$Message = $Api->build_request($db);
 					$Message[0]['less'] = $default['add']; 
 				} else throw new ApiException('Тип указан не верно!', 400);

@@ -93,14 +93,14 @@ function get_image(id, type, mess, search = null) {
                     set_mess(1, 'index_but');
                 }else set_mess(0, 'index_but');
                 append_section(element); 
+                last_id++;
             });   
         }
-        last_id -= stats;
     });
 }
 
 $(document).ready(function() {
-    get_stats();
+    //get_stats();
 
     $('#button').click(function() {
         search_start($('#input').val());
@@ -115,6 +115,7 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '.index_but', function(){
+        console.log(last_id);
         get_image(last_id, 'index', 'ADD');
     });
 

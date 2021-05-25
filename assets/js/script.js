@@ -52,9 +52,8 @@ function search_start(val) {
     message_set = val;
     last_id = 0;
     if (val === '') {
-        get_stats();
         set_mess(0, 'index_but');
-        get_image(last_id, 'index', 'FIRST');
+        get_image(0, 'index', 'FIRST');
     }else{
         set_mess(0, 'search_but');
         get_image(0, 'search', 'FIRST', $('#input').val());
@@ -106,6 +105,12 @@ $(document).ready(function() {
         search_start($('#input').val());
     });
 
+    // http://jquery.page2page.ru/index.php5/%D0%A1%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F#.D0.A1.D0.BE.D0.B1.D1.8B.D1.82.D0.B8.D1.8F_.D0.BC.D1.8B.D1.88.D0.B8
+    // Инфа с этого сайта
+    $('#input').keyup(function(){ 
+        search_start($(this).val());
+    });
+
     // https://webformyself.com/kak-pojmat-sobytie-nazhatiya-enter-v-pole-input
     // Инфу на этом сайте нашел.
     $('#input').keydown(function(e) {
@@ -115,7 +120,6 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '.index_but', function(){
-        console.log(last_id);
         get_image(last_id, 'index', 'ADD');
     });
 

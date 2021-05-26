@@ -7,6 +7,7 @@
 -----------------
 ### Composer
 Рекомендуемый способ установки через [composer](http://getcomposer.org/).
+
     composer create-project kivahnin/website_img_parce folder-name
 
 ### Архивом

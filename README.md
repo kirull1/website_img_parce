@@ -5,5 +5,9 @@
 
 Установка проекта
 -----------------
-
+### Composer
+Рекомендуемый способ установки через [composer](http://getcomposer.org/).
     composer create-project kivahnin/website_img_parce folder-name
+
+### Архивом
+Если вам не нравится использовать composer, то вы можете скачать архив с проектом через github и распоковать его в удобном для вас месте.

@@ -1,5 +1,5 @@
-const url = document.location.origin + '/colege_project/server/api.php';
-const download_url = document.location.origin + '/colege_project/server/';
+const url = document.location.origin + '/api.php';
+const download_url = document.location.origin + '';
 
 const end_mess = 'Вы дошли до конца';
 const empty_mess = 'Эта страница пустая';
@@ -12,17 +12,6 @@ let message_set = '';
 function append_section(array) {
     return $('.content').append('<div class="content_head"><div class="content_block"><a href="image/full/' + array['way'] + '" target="_blank"><div class="content_block_img"><img class="content_img" src="image/full/' + array['way'] + '" alt=""></div><h4>' + array['tags'].split(' ').slice(0, 2).join(' ') + '</h4></a></div><div class="content_block_action"><button class="content_block_action_button button_origin tooltip" data-title="' + (array['origin'] === null ? 'Источник отсутствует' : 'Источник') + '" href="' + (array['origin'] === null ? 'empty' : array['origin']) + '" style="border-radius: 0 0 0 16px;"><img class="image_add" src="assets/icon/info.png"></button><button value="image/full/' + array['way'] + '" class="content_block_action_button button_copy tooltip" data-title="Скопировать ссылку"><img class="image_add" src="assets/icon/copy.png"></button><button class="content_block_action_button button_download tooltip" value="image/full/' + array['way'] + '" data-title="Скачать" style="border-radius: 0 0 16px 0;"><img class="image_add" src="assets/icon/download.png"></button></div></div>');
 }
-
-function get_stats() {
-    $.get(url, {id : 0, type : 'stats', message : 0}, function(result) {
-        result = JSON.parse(result);
-        if (result['Error'] === false) {
-            last_id = result['Message'][0]['count'];
-            stats = result['Message'][0]['less'];
-        }
-    });
-}
-
 
 // https://www.pandoge.com/moduli-i-skripty/skachivanie-faylov-po-ssylke-na-javascript //
 // Функция с этого сайта. Супер большое спасибо автору. //
@@ -84,7 +73,6 @@ function get_image(id, type, mess, search = null) {
     }
     $.get(url, {id : id, type : type, message : mess, search : search}, function(result) {
         result = JSON.parse(result);
-        console.log(result);
         if (result['Error'] === false) {
             result['Message'] === false ? set_mess(1, 'index_but') :set_mess(0, 'index_but');
             result['Message'].forEach(element => {
@@ -99,7 +87,6 @@ function get_image(id, type, mess, search = null) {
 }
 
 $(document).ready(function() {
-    //get_stats();
 
     $('#button').click(function() {
         search_start($('#input').val());

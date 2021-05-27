@@ -17,6 +17,32 @@
             $this->dbname = $settings_pdo['dbname'];
             $this->login = $settings_pdo['login'];
             $this->password = $settings_pdo['password'];
+
+            $this->check_db();
+        }
+
+        // Проверка на наличее таблиц
+        private function check_db(){
+            $encoding = 'utf8mb4_unicode_ci';
+            if(!$this->get_build('DESCRIBE `image`')->execute()){
+                $this->get_build("CREATE TABLE `image` (
+                    `id` int(11) NOT NULL,
+                    `way` varchar(255) COLLATE $encoding NOT NULL,
+                    `tags` text COLLATE $encoding NOT NULL,
+                    `origin` text COLLATE $encoding
+                  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=$encoding;")->execute();
+                $this->get_build('ALTER TABLE `image` ADD PRIMARY KEY (`id`);')->execute();
+                $this->get_build('ALTER TABLE `image` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;')->execute();
+            }
+            if(!$this->get_build('DESCRIBE `ip_log`')->execute()){
+                $this->get_build("CREATE TABLE `ip_log` (
+                    `id` int(11) NOT NULL,
+                    `ip` varchar(20) COLLATE $encoding NOT NULL,
+                    `time` int(11) NOT NULL
+                  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=$encoding;")->execute();
+                $this->get_build('ALTER TABLE `ip_log` ADD PRIMARY KEY (`id`);')->execute();
+                $this->get_build('ALTER TABLE `ip_log` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT; COMMIT')->execute();
+            }
         }
 
         // Подключения к базе данных

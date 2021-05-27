@@ -18,7 +18,7 @@
     class api{
 
         public static $config = [
-            'domain' => 'u1390296.isp.regruhosting.ru', // Ваше доменное имя
+            'domain' => 'your_domain_name', // Ваше доменное имя
             'start' => 20, // Начальное кол-во записей на главной странице
             'search_start' => 20, // Начальное кол-во записей при поиске
             'add' => 20, // Кол-во записей для промежудка

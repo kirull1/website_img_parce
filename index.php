@@ -12,14 +12,20 @@
 
     <section class="content">
         <?php
+            require_once 'settings/config.php';
+
+            use setting\api;
+
             $options = [
-                'id' => true,
+                'id' => 0,
                 'type' => 'index',
                 'message' => 'FIRST',
                 'search' => null,
             ];
-            foreach(json_decode(file_get_contents('http://localhost:8008/colege_project/server/api.php?' . http_build_query($options)))->Message as $content)
-                echo '<div class="content_head"><div class="content_block"><a href="image/full/' . $content->way . '" target="_blank"><div class="content_block_img"><img class="content_img" src="image/full/' . $content->way . '" alt=""></div><h4>' . implode(' ', array_slice(explode(' ', $content->tags), 0, 2)) . '</h4></a></div><div class="content_block_action"><button class="content_block_action_button button_origin tooltip" data-title="' . ($content->origin === null ? 'Источник отсутствует' : 'Источник') . '" href="' . ($content->origin === null ? 'empty' : $content->origin) . '" style="border-radius: 0 0 0 16px;"><img class="image_add" src="assets/icon/info.png"></button><button value="image/full/' . $content->way . '" class="content_block_action_button button_copy tooltip" data-title="Скопировать ссылку"><img class="image_add" src="assets/icon/copy.png"></button><button class="content_block_action_button button_download tooltip" value="image/full/' . $content->way . '" data-title="Скачать" style="border-radius: 0 0 16px 0;"><img class="image_add" src="assets/icon/download.png"></button></div></div>';
+            $result = json_decode(file_get_contents('http://' . api::$config['domain'] . '/api.php?' . http_build_query($options)))->Message;
+            $result === false ? print('<h4 class="end">Тут пусто</h4>') : array_map(function($content){
+                echo '<div class="content_head"><div class="content_block"><a href="image/full/' . $content->way . '" target="_blank"><div class="content_block_img"><img class="content_img" src="image/small/' . $content->way . '" alt=""></div><h4>' . implode(' ', array_slice(explode(' ', $content->tags), 0, 2)) . '</h4></a></div><div class="content_block_action"><button class="content_block_action_button button_origin tooltip" data-title="' . ($content->origin === null ? 'Источник отсутствует' : 'Источник') . '" href="' . ($content->origin === null ? 'empty' : $content->origin) . '" style="border-radius: 0 0 0 16px;"><img class="image_add" src="assets/icon/info.png"></button><button value="image/full/' . $content->way . '" class="content_block_action_button button_copy tooltip" data-title="Скопировать ссылку"><img class="image_add" src="assets/icon/copy.png"></button><button class="content_block_action_button button_download tooltip" value="image/full/' . $content->way . '" data-title="Скачать" style="border-radius: 0 0 16px 0;"><img class="image_add" src="assets/icon/download.png"></button></div></div>';
+            }, $result);
         ?>
     </section>
 

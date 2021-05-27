@@ -5,13 +5,16 @@
     class transform{
 
         public static function squeeze($file, $get, $save, $width, $height, $quality = 0){
-            list($width_old, $height_old) = getimagesize("../image/full/$file");
-            $image_background = imagecreatetruecolor($width, $height);
-            imagealphablending($image_background, false);
-            imagesavealpha($image_background, true);
-            $image = imagecreatefrompng("$get/$file");
-            imagecopyresampled($image_background, $image, 0, 0, 0, 0, $width, $height, $width_old, $height_old);
-            return imagepng($image_background, "$save/$file", $quality);
+            list($width_old, $height_old) = @getimagesize(rtrim($get, '/')."/$file");
+            $image_background = @imagecreatetruecolor($width, $height);
+            $image = @imagecreatefrompng(rtrim($get, '/')."/$file");
+            @imagealphablending($image_background, false);
+            @imagesavealpha($image_background, true);
+            @imageinterlace($image_background, 1);
+            @imagecopyresampled($image_background, $image, 0, 0, 0, 0, $width, $height, $width_old, $height_old);
+            @imagepng($image_background, rtrim($save, '/')."/$file", $quality);
+            @imagedestroy($image_background);
+            @imagedestroy($image);
         } 
 
     }
